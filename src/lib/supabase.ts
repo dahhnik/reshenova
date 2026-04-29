@@ -16,11 +16,13 @@ export type Database = {
         Row: { id: string; full_name: string; created_at: string }
         Insert: { id: string; full_name: string; created_at?: string }
         Update: { full_name?: string; created_at?: string }
+        Relationships: []
       }
       templates: {
         Row: { id: string; owner_id: string | null; name: string; created_at: string }
         Insert: { id?: string; owner_id?: string | null; name: string; created_at?: string }
         Update: { owner_id?: string | null; name?: string; created_at?: string }
+        Relationships: []
       }
       template_fields: {
         Row: {
@@ -52,6 +54,7 @@ export type Database = {
           sort_order?: number
           created_at?: string
         }
+        Relationships: []
       }
       projects: {
         Row: {
@@ -87,6 +90,7 @@ export type Database = {
           active?: boolean
           updated_at?: string
         }
+        Relationships: []
       }
       project_phases: {
         Row: {
@@ -111,11 +115,13 @@ export type Database = {
           sort_order?: number
           created_at?: string
         }
+        Relationships: []
       }
       phase_required_fields: {
         Row: { phase_id: string; template_field_id: string }
         Insert: { phase_id: string; template_field_id: string }
         Update: { phase_id?: string; template_field_id?: string }
+        Relationships: []
       }
       messages: {
         Row: {
@@ -145,6 +151,7 @@ export type Database = {
           sent_at?: string
           received_at?: string
         }
+        Relationships: []
       }
       decision_candidates: {
         Row: {
@@ -180,6 +187,7 @@ export type Database = {
           extraction_note?: string | null
           created_at?: string
         }
+        Relationships: []
       }
       decision_log: {
         Row: {
@@ -217,8 +225,11 @@ export type Database = {
           sheet_written_at?: string | null
           superseded_by?: string | null
         }
+        Relationships: []
       }
     }
+    Views: Record<string, never>
+    Functions: Record<string, never>
   }
 }
 
