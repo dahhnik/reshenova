@@ -1,7 +1,7 @@
 import { render } from 'solid-js/web'
 import { Router, Route, useNavigate } from '@solidjs/router'
 import { createSignal, createEffect, onCleanup, Show, type ParentProps } from 'solid-js'
-import { getSession, onAuthStateChange } from './lib/auth'
+import { getSession, onAuthStateChange, signOut } from './lib/auth'
 import Login from './pages/Login'
 import './index.css'
 
@@ -31,9 +31,27 @@ function AuthGuard(props: ParentProps) {
 }
 
 function Dashboard() {
+  const navigate = useNavigate()
+
+  async function handleSignOut() {
+    await signOut()
+    navigate('/login', { replace: true })
+  }
+
   return (
     <AuthGuard>
-      <div class="p-8 text-gray-600">Dashboard — coming soon.</div>
+      <div class="min-h-screen bg-gray-50">
+        <header class="flex items-center justify-between px-6 py-4 bg-white border-b border-gray-200">
+          <span class="font-semibold text-gray-900">Reshenova</span>
+          <button
+            onClick={handleSignOut}
+            class="text-sm text-gray-500 hover:text-gray-900"
+          >
+            Sign out
+          </button>
+        </header>
+        <div class="p-8 text-gray-600">Dashboard — coming soon.</div>
+      </div>
     </AuthGuard>
   )
 }

@@ -11,7 +11,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
-    "lint": "eslint . && tsc --noEmit && tsc --noEmit -p frontend/tsconfig.json"
+    "lint": "eslint . && tsc --noEmit && tsc --noEmit -p frontend/tsconfig.json",
+    "seed": "tsx scripts/seed-dev.ts"
   },
   "dependencies": {
     "hono": "^4.4.0",

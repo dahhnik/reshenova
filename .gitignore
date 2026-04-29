@@ -5,6 +5,7 @@ frontend/node_modules/
 # Build outputs
 dist/
 frontend/dist/
+frontend/.vite/
 *.tsbuildinfo
 
 # Environment — never commit secrets
