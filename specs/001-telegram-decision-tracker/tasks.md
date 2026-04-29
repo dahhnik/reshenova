@@ -37,18 +37,18 @@
 
 **⚠️ CRITICAL**: No user story work starts until this phase is complete.
 
-- [ ] T008 Write Supabase migration 001 — `supabase/migrations/001_profiles_templates.sql`: `profiles`, `templates`, `template_fields` tables with all columns, constraints, and indexes from data-model.md
-- [ ] T009 Write Supabase migration 002 — `supabase/migrations/002_projects_phases.sql`: `projects`, `project_phases`, `phase_required_fields` tables
-- [ ] T010 Write Supabase migration 003 — `supabase/migrations/003_messages_candidates.sql`: `messages` (with unique constraint on `project_id, telegram_message_id`), `decision_candidates` (with confidence check, status enum, source_message_ids array)
-- [ ] T011 Write Supabase migration 004 — `supabase/migrations/004_decision_log.sql`: `decision_log` table with `superseded_by` self-reference and `sheet_written_at` nullable timestamp
-- [ ] T012 [P] Write RLS policies — `supabase/migrations/005_rls_policies.sql`: enable RLS on all tables; contractors can only read/write rows where `owner_id = auth.uid()` or project chain resolves to their `owner_id`
-- [ ] T013 [P] Write seed migration — `supabase/migrations/006_seed_templates.sql`: one "Residential Renovation" template with 12 common fields (paint color, tile material, grout color, cabinet hardware, countertop, flooring, fixture finish, start date, completion date, permit number, total budget, contractor notes) mapped to sheet cells A2–A13
-- [ ] T014 Implement typed Supabase server client — `api/lib/supabase.ts`: factory returning a Supabase client initialized with service role key for server-side use; export typed Database interface generated from schema
-- [ ] T015 Implement Hono app entry point — `api/index.ts`: create Hono app, register CORS, JSON body parser, and error-handling middleware; export as Vercel serverless handler
-- [ ] T016 Implement Supabase JWT auth middleware — `api/middleware/auth.ts`: validate `Authorization: Bearer <jwt>` header using `supabase.auth.getUser(token)`; attach `userId` to Hono context; return 401 on invalid token
-- [ ] T017 [P] Implement typed API fetch wrapper — `frontend/src/lib/api.ts`: typed `apiFetch<T>` function that attaches the Supabase session JWT to every request; throws typed errors on non-2xx responses
-- [ ] T018 [P] Implement Supabase Auth browser client — `frontend/src/lib/auth.ts`: `signIn`, `signOut`, `getSession`, `onAuthStateChange` wrappers using `@supabase/supabase-js`
-- [ ] T019 Implement Login page + auth guard — `frontend/src/pages/Login.tsx` (email/password form using `auth.signIn`); `frontend/src/main.tsx` Solid Router setup with `<AuthGuard>` component redirecting unauthenticated users to `/login`
+- [x] T008 Write Supabase migration 001 — `supabase/migrations/001_profiles_templates.sql`: `profiles`, `templates`, `template_fields` tables with all columns, constraints, and indexes from data-model.md
+- [x] T009 Write Supabase migration 002 — `supabase/migrations/002_projects_phases.sql`: `projects`, `project_phases`, `phase_required_fields` tables
+- [x] T010 Write Supabase migration 003 — `supabase/migrations/003_messages_candidates.sql`: `messages` (with unique constraint on `project_id, telegram_message_id`), `decision_candidates` (with confidence check, status enum, source_message_ids array)
+- [x] T011 Write Supabase migration 004 — `supabase/migrations/004_decision_log.sql`: `decision_log` table with `superseded_by` self-reference and `sheet_written_at` nullable timestamp
+- [x] T012 [P] Write RLS policies — `supabase/migrations/005_rls_policies.sql`: enable RLS on all tables; contractors can only read/write rows where `owner_id = auth.uid()` or project chain resolves to their `owner_id`
+- [x] T013 [P] Write seed migration — `supabase/migrations/006_seed_templates.sql`: one "Residential Renovation" template with 12 common fields (paint color, tile material, grout color, cabinet hardware, countertop, flooring, fixture finish, start date, completion date, permit number, total budget, contractor notes) mapped to sheet cells A2–A13
+- [x] T014 Implement typed Supabase server client — `src/lib/supabase.ts`: factory returning a Supabase client initialized with service role key for server-side use; export typed Database interface generated from schema
+- [x] T015 Implement Hono app entry point — `src/app.ts` (Hono app) + `api/index.ts` (Vercel entry importing from src/app.ts): create Hono app, register CORS, JSON body parser, and error-handling middleware; export as Vercel serverless handler
+- [x] T016 Implement Supabase JWT auth middleware — `src/middleware/auth.ts`: validate `Authorization: Bearer <jwt>` header using `supabase.auth.getUser(token)`; attach `userId` to Hono context; return 401 on invalid token
+- [x] T017 [P] Implement typed API fetch wrapper — `frontend/src/lib/api.ts`: typed `apiFetch<T>` function that attaches the Supabase session JWT to every request; throws typed errors on non-2xx responses
+- [x] T018 [P] Implement Supabase Auth browser client — `frontend/src/lib/auth.ts`: `signIn`, `signOut`, `getSession`, `onAuthStateChange` wrappers using `@supabase/supabase-js`
+- [x] T019 Implement Login page + auth guard — `frontend/src/pages/Login.tsx` (email/password form using `auth.signIn`); `frontend/src/main.tsx` Solid Router setup with `<AuthGuard>` component redirecting unauthenticated users to `/login`
 
 **Checkpoint**: `supabase db push` applies all migrations. Login page renders, accepts credentials, and redirects to `/` on success. Auth middleware rejects requests with missing or expired JWTs.
 
