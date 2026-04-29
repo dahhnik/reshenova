@@ -2,7 +2,7 @@ import tseslint from 'typescript-eslint'
 
 export default tseslint.config(
   {
-    ignores: ['node_modules/**', 'frontend/node_modules/**', 'dist/**', 'frontend/dist/**', 'coverage/**'],
+    ignores: ['node_modules/**', 'frontend/node_modules/**', 'dist/**', 'frontend/dist/**', 'coverage/**', '.vercel/**'],
   },
   ...tseslint.configs.recommended,
   {
