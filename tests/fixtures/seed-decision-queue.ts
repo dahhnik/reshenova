@@ -28,7 +28,7 @@ if (!fields || fields.length < 3) {
 }
 
 // Insert a dummy source message
-const { data: message } = await supabase
+const { data: message, error: messageError } = await supabase
   .from('messages')
   .insert({
     project_id: projectId,
@@ -41,7 +41,7 @@ const { data: message } = await supabase
   .single()
 
 if (!message) {
-  console.error('Failed to insert message')
+  console.error('Failed to insert message:', messageError)
   process.exit(1)
 }
 

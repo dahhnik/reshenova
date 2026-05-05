@@ -62,21 +62,21 @@
 
 ### Tests — write first, confirm they fail before implementing
 
-- [ ] T020 Write failing unit tests for confidence threshold routing — `tests/unit/extraction/confidence-threshold.test.ts`: assert candidates with confidence ≥ 0.85 are status `auto_confirmed`; candidates < 0.85 are `pending_review`; contradictions are always `pending_review` regardless of score
-- [ ] T021 [P] Write failing integration tests for GET `/projects/:id/decisions/queue` — `tests/integration/supabase-queries.test.ts`: assert pending and recent auto-confirmed candidates are returned with source messages; assert candidates from other projects are not returned
-- [ ] T022 [P] Write failing integration tests for PATCH confirm and reject — `tests/integration/supabase-queries.test.ts`: assert confirm creates a `decision_log` entry with correct `confirmed_value`; assert reject sets status to `rejected` with no sheet write
+- [x] T020 Write failing unit tests for confidence threshold routing — `tests/unit/extraction/confidence-threshold.test.ts`: assert candidates with confidence ≥ 0.85 are status `auto_confirmed`; candidates < 0.85 are `pending_review`; contradictions are always `pending_review` regardless of score
+- [x] T021 [P] Write failing integration tests for GET `/projects/:id/decisions/queue` — `tests/integration/supabase-queries.test.ts`: assert pending and recent auto-confirmed candidates are returned with source messages; assert candidates from other projects are not returned
+- [x] T022 [P] Write failing integration tests for PATCH confirm and reject — `tests/integration/supabase-queries.test.ts`: assert confirm creates a `decision_log` entry with correct `confirmed_value`; assert reject sets status to `rejected` with no sheet write
 
 ### Implementation
 
-- [ ] T023 [P] [US1] Implement Google Sheets cell write — `api/lib/sheets.ts`: `writeCell(sheetId, cellRef, value)` using Google Sheets API v4 with service account credentials from `GOOGLE_SERVICE_ACCOUNT_JSON` env var
-- [ ] T024 [P] [US1] Implement decision queue route — `api/routes/queue.ts`: GET `/projects/:id/decisions/queue` returning `pending_review` candidates and `auto_confirmed` candidates from last 48 hours, each with `source_messages`, `template_field`, and `confidence`; apply auth middleware; verify project belongs to requesting user
-- [ ] T025 [US1] Implement candidate confirm route — `api/routes/candidates.ts`: PATCH `/projects/:id/candidates/:cid/confirm` accepting optional `confirmed_value` and `correction_note`; create `decision_log` entry; call `sheets.writeCell`; set candidate status to `confirmed`; if field had prior active log entry set `superseded_by`
-- [ ] T026 [US1] Implement candidate reject route — `api/routes/candidates.ts`: PATCH `/projects/:id/candidates/:cid/reject`; set candidate status to `rejected`; no sheet write
-- [ ] T027 [P] [US1] Implement ConfidenceBadge component — `frontend/src/components/ConfidenceBadge.tsx`: green "Auto-confirmed" badge for confidence ≥ 0.85; amber "Needs review" for < 0.85; shows numeric score on hover
-- [ ] T028 [P] [US1] Implement DecisionCard component — `frontend/src/components/DecisionCard.tsx`: displays template field name + category, quoted source message(s) with sender and timestamp, extracted value (editable input), ConfidenceBadge, Confirm and Reject buttons; calls `api.confirmCandidate` or `api.rejectCandidate`; removes card from list on action
-- [ ] T029 [US1] Implement DecisionQueue page — `frontend/src/pages/DecisionQueue.tsx`: fetches queue from API on mount; renders two sections ("Needs Your Review" and "Auto-Confirmed Today"); shows empty state when queue is clear; loading skeleton during fetch
-- [ ] T030 [US1] Register queue and candidates routes — `api/index.ts`: mount `queueRoute` and `candidatesRoute` under `/projects/:id`; apply auth middleware to both
-- [ ] T031 [US1] Add test data seed script — `tests/fixtures/seed-decision-queue.ts`: inserts a project with 3 pending candidates (confidence 0.62, 0.45, 0.71) and 2 auto-confirmed candidates (confidence 0.91, 0.88) for local development and integration testing
+- [x] T023 [P] [US1] Implement Google Sheets cell write — `api/lib/sheets.ts`: `writeCell(sheetId, cellRef, value)` using Google Sheets API v4 with service account credentials from `GOOGLE_SERVICE_ACCOUNT_JSON` env var
+- [x] T024 [P] [US1] Implement decision queue route — `api/routes/queue.ts`: GET `/projects/:id/decisions/queue` returning `pending_review` candidates and `auto_confirmed` candidates from last 48 hours, each with `source_messages`, `template_field`, and `confidence`; apply auth middleware; verify project belongs to requesting user
+- [x] T025 [US1] Implement candidate confirm route — `api/routes/candidates.ts`: PATCH `/projects/:id/candidates/:cid/confirm` accepting optional `confirmed_value` and `correction_note`; create `decision_log` entry; call `sheets.writeCell`; set candidate status to `confirmed`; if field had prior active log entry set `superseded_by`
+- [x] T026 [US1] Implement candidate reject route — `api/routes/candidates.ts`: PATCH `/projects/:id/candidates/:cid/reject`; set candidate status to `rejected`; no sheet write
+- [x] T027 [P] [US1] Implement ConfidenceBadge component — `frontend/src/components/ConfidenceBadge.tsx`: green "Auto-confirmed" badge for confidence ≥ 0.85; amber "Needs review" for < 0.85; shows numeric score on hover
+- [x] T028 [P] [US1] Implement DecisionCard component — `frontend/src/components/DecisionCard.tsx`: displays template field name + category, quoted source message(s) with sender and timestamp, extracted value (editable input), ConfidenceBadge, Confirm and Reject buttons; calls `api.confirmCandidate` or `api.rejectCandidate`; removes card from list on action
+- [x] T029 [US1] Implement DecisionQueue page — `frontend/src/pages/DecisionQueue.tsx`: fetches queue from API on mount; renders two sections ("Needs Your Review" and "Auto-Confirmed Today"); shows empty state when queue is clear; loading skeleton during fetch
+- [x] T030 [US1] Register queue and candidates routes — `api/index.ts`: mount `queueRoute` and `candidatesRoute` under `/projects/:id`; apply auth middleware to both
+- [x] T031 [US1] Add test data seed script — `tests/fixtures/seed-decision-queue.ts`: inserts a project with 3 pending candidates (confidence 0.62, 0.45, 0.71) and 2 auto-confirmed candidates (confidence 0.91, 0.88) for local development and integration testing
 
 **Checkpoint**: Seed test data, open `/projects/:id/decisions`, confirm a pending card with an edited value, verify the Google Sheet cell is updated and a decision log row exists in Supabase.
 
