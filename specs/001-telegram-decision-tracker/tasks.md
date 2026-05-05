@@ -90,15 +90,15 @@
 
 ### Tests — write first, confirm they fail before implementing
 
-- [ ] T032 Write failing unit tests for Gemini response parsing — `tests/unit/extraction/parse-candidates.test.ts`: assert valid JSON responses are parsed into `DecisionCandidate` inserts; assert malformed/empty responses produce zero candidates; assert contradiction detection fires when extracted field already has a confirmed log entry
-- [ ] T033 [P] Write failing integration tests for POST `/telegram/webhook` — `tests/integration/webhook-handler.test.ts`: assert valid secret token → 200 response immediately; assert message row is created; assert invalid secret → 401; assert non-text message type is skipped without error
+- [x] T032 Write failing unit tests for Gemini response parsing — `tests/unit/extraction/parse-candidates.test.ts`: assert valid JSON responses are parsed into `DecisionCandidate` inserts; assert malformed/empty responses produce zero candidates; assert contradiction detection fires when extracted field already has a confirmed log entry
+- [x] T033 [P] Write failing integration tests for POST `/telegram/webhook` — `tests/integration/webhook-handler.test.ts`: assert valid secret token → 200 response immediately; assert message row is created; assert invalid secret → 401; assert non-text message type is skipped without error
 
 ### Implementation
 
-- [ ] T034 [P] [US2] Implement Telegram webhook secret validator and `getChat` helper — `api/lib/telegram.ts`: `validateWebhookSecret(header, projectSecret) → boolean`; `getChat(chatId) → { title }` for project setup validation
-- [ ] T035 [US2] Implement Gemini Flash extraction — `api/lib/extraction.ts`: `extractDecisions(messages, templateFields) → DecisionCandidate[]`; system prompt describes all template fields by name/category; user prompt contains message batch as JSON; parse structured JSON response; assign confidence scores; flag contradictions against existing confirmed decisions passed as context
-- [ ] T036 [US2] Implement webhook route — `api/routes/webhook.ts`: POST `/telegram/webhook`; validate `X-Telegram-Bot-Api-Secret-Token` header; return 200 immediately; async: look up project by `chat_id`, skip non-text messages, store `message` row (dedup on `telegram_message_id`), call `extraction.extractDecisions`, insert `decision_candidate` rows, auto-confirm candidates with confidence ≥ 0.85 (call `sheets.writeCell` + insert `decision_log`), route remainder to `pending_review`
-- [ ] T037 [US2] Register webhook route — `api/index.ts`: mount `webhookRoute` at `/telegram/webhook` (no auth middleware — authenticated via Telegram secret token instead)
+- [x] T034 [P] [US2] Implement Telegram webhook secret validator and `getChat` helper — `api/lib/telegram.ts`: `validateWebhookSecret(header, projectSecret) → boolean`; `getChat(chatId) → { title }` for project setup validation
+- [x] T035 [US2] Implement Gemini Flash extraction — `api/lib/extraction.ts`: `extractDecisions(messages, templateFields) → DecisionCandidate[]`; system prompt describes all template fields by name/category; user prompt contains message batch as JSON; parse structured JSON response; assign confidence scores; flag contradictions against existing confirmed decisions passed as context
+- [x] T036 [US2] Implement webhook route — `api/routes/webhook.ts`: POST `/telegram/webhook`; validate `X-Telegram-Bot-Api-Secret-Token` header; return 200 immediately; async: look up project by `chat_id`, skip non-text messages, store `message` row (dedup on `telegram_message_id`), call `extraction.extractDecisions`, insert `decision_candidate` rows, auto-confirm candidates with confidence ≥ 0.85 (call `sheets.writeCell` + insert `decision_log`), route remainder to `pending_review`
+- [x] T037 [US2] Register webhook route — `api/index.ts`: mount `webhookRoute` at `/telegram/webhook` (no auth middleware — authenticated via Telegram secret token instead)
 
 **Checkpoint**: Start ngrok, register webhook, post a message in the Telegram group containing a decision (e.g. "paint is Chantilly Lace"), verify candidate appears in the queue page.
 
