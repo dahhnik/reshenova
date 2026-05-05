@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "concurrently \"npm run dev:api\" \"npm run dev:frontend\"",
-    "dev:api": "tsx watch src/server.ts",
+    "dev:api": "tsx watch --env-file=.env.local src/server.ts",
     "dev:frontend": "cd frontend && npm run dev",
     "build": "cd frontend && npm run build",
     "test": "vitest run",
